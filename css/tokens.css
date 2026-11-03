@@ -1,0 +1,288 @@
+/* Tokens del Figma: sobrescriben las variables de Basecoat (estilo shadcn) */
+:root {
+  --primary: #4F46E5;            /* indigo-600 */
+  --primary-foreground: #FFFFFF;
+  --ring: #4F46E5;
+  --destructive: #DC2626;        /* red-600 */
+  --foreground: #0F172A;         /* slate-900 */
+  --muted-foreground: #64748B;   /* slate-500 */
+  --border: #E2E8F0;             /* slate-200 */
+  --input: #E2E8F0;
+  --radius: 0.75rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #F5F7FB;
+  color: #0F172A;
+}
+
+/* Campos: fuera de capa para ganarle a los selectores de Basecoat */
+/* ---------- Inputs (Figma: default / focus / error) ---------- */
+.field > :is(input:not([type="checkbox"]):not([type="radio"]), select) {
+  height: 2.875rem;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  font-size: 15px;
+  padding-inline: 0.875rem;
+  box-shadow: none;
+}
+.field > :is(input:not([type="checkbox"]):not([type="radio"]), select):focus-visible {
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 1px #4F46E5;
+}
+.field > :is(input:not([type="checkbox"]):not([type="radio"]), select)[aria-invalid="true"] {
+  border-color: #DC2626;
+  background-color: #FEF2F2;
+  box-shadow: 0 0 0 1px #DC2626;
+}
+.field > input::placeholder { color: #94A3B8; }
+
+.field > label, .label { font-size: 13px; font-weight: 600; color: #0F172A; }
+.field[data-orientation="horizontal"] > label { font-weight: 400; color: #475569; }
+.field > p, .field [role="alert"] { font-size: 12px; }
+.field > p:not([role="alert"]) { color: #64748B; }
+.field[data-invalid] > label { color: #0F172A; }
+.field [role="alert"] { color: #DC2626; }
+.field[data-invalid] > p[data-help] { display: none; }
+
+/* El resto va en la capa components: le gana a Basecoat y deja que las utilidades de Tailwind lo sobrescriban */
+@layer components {
+  /* ---------- Escala tipográfica ---------- */
+  .h2 { font-size: 24px; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; }
+  .lead { font-size: 15px; line-height: 1.5; font-weight: 400; color: #64748B; }
+
+  @media (min-width: 1024px) {
+    .h2 { font-size: 28px; }
+  }
+
+  /* ---------- Botones (Figma: Primary / Secondary / Ghost / Disabled) ---------- */
+  .btn:not([data-size]) {
+    height: 3rem;
+    padding-inline: 1.5rem;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .btn[data-variant="outline"] {
+    border: 1.5px solid #4F46E5;
+    background: #FFFFFF;
+    color: #4F46E5;
+  }
+  .btn[data-variant="outline"]:hover { background: #EEF2FF; }
+  .btn[data-variant="ghost"] { color: #4F46E5; }
+  .btn[data-variant="ghost"]:hover { background: #EEF2FF; }
+  .btn:not([data-variant]):disabled {
+    background: #CBD5E1;
+    color: #FFFFFF;
+    opacity: 1;
+  }
+
+  /* ---------- Chips de antigüedad ---------- */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    padding-inline: 1rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    background: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0F172A;
+    cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s;
+  }
+  .chip:hover { border-color: #A5B4FC; }
+  .chip:has(input:checked) {
+    border: 1.5px solid #4F46E5;
+    background: #EEF2FF;
+    color: #3730A3;
+    font-weight: 600;
+  }
+  [data-invalid] .chip { border-color: #FCA5A5; }
+
+  .chip:has(input:focus-visible),
+  .plan-card:has(input:focus-visible),
+  .metodo:has(input:focus-visible) {
+    outline: 2px solid #4F46E5;
+    outline-offset: 2px;
+  }
+
+  /* ---------- Radio visual (cards de plan y medio de pago) ---------- */
+  .radio-ui {
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 999px;
+    border: 1.5px solid #CBD5E1;
+    background: #FFFFFF;
+    flex-shrink: 0;
+  }
+  .radio-ui::after {
+    content: "";
+    width: .5rem;
+    height: .5rem;
+    border-radius: 999px;
+    background: #FFFFFF;
+    opacity: 0;
+  }
+  :has(> input:checked) > .radio-ui,
+  :has(> input:checked) .radio-ui {
+    border-color: #4F46E5;
+    background: #4F46E5;
+  }
+  :has(> input:checked) > .radio-ui::after,
+  :has(> input:checked) .radio-ui::after { opacity: 1; }
+
+  /* ---------- Cards de plan ---------- */
+  .plan-card {
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    background: #FFFFFF;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .plan-card:hover { border-color: #A5B4FC; }
+  .plan-card:has(input:checked) {
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 1px #4F46E5;
+  }
+
+  /* ---------- Medio de pago (crédito / débito) ---------- */
+  .metodo {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    height: 3rem;
+    padding-inline: 1rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    background: #FFFFFF;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .metodo:has(input:checked) {
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 1px #4F46E5;
+    font-weight: 600;
+  }
+
+  /* ---------- Stepper: completo / activo / pendiente ---------- */
+  .step-dot {
+    display: grid;
+    place-items: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 999px;
+    border: 1.5px solid #CBD5E1;
+    background: #FFFFFF;
+    color: #64748B;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-dot .step-check { display: none; }
+  .step-label { font-size: 12px; font-weight: 500; color: #64748B; }
+  .step-line { height: 1.5px; background: #E2E8F0; }
+  .step-line[data-completa] { background: #059669; }
+
+  [data-estado="activo"] .step-dot { border-color: #4F46E5; background: #4F46E5; color: #FFFFFF; }
+  [data-estado="activo"] .step-label { color: #4F46E5; font-weight: 700; }
+
+  [data-estado="completo"] .step-dot { border-color: #059669; background: #059669; color: #FFFFFF; }
+  [data-estado="completo"] .step-dot .step-num { display: none; }
+  [data-estado="completo"] .step-dot .step-check { display: block; }
+  [data-estado="completo"] .step-label { color: #059669; font-weight: 600; }
+
+  /* ---------- Avisos de simulación (ámbar) ---------- */
+  .aviso {
+    border-radius: 8px;
+    background: #FFFBEB;
+    color: #B45309;
+    padding: .625rem .875rem;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .alert.aviso > section { color: inherit; font-size: 12px; }
+
+  /* ---------- Pie de acciones de cada paso ----------
+     Mobile: barra fija abajo con el botón a lo ancho.
+     Desktop: dentro de la card, separado por una línea, "Volver" a la izquierda. */
+  .acciones {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: .75rem 1rem;
+    border-top: 1px solid #E2E8F0;
+    background: #FFFFFF;
+  }
+  .acciones .btn { width: 100%; }
+  .acciones [data-accion="volver"] { display: none; }
+
+  @media (min-width: 1024px) {
+    .acciones {
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0 0;
+      background: transparent;
+    }
+    .acciones .btn { width: auto; min-width: 10rem; }
+    .acciones .btn[type="submit"] { min-width: 15rem; }
+    .acciones [data-accion="volver"] { display: inline-flex; }
+    .acciones:not(:has([data-accion="volver"])) { justify-content: flex-end; }
+  }
+
+  /* ---------- Resumen: un solo <aside>, distinto según el paso en mobile ---------- */
+  .resumen-barra { display: none; }
+
+  @media (max-width: 1023.98px) {
+    [data-resumen] { display: none; }
+
+    /* Paso 2: línea de resumen fija arriba del botón */
+    [data-resumen][data-modo="2"] {
+      display: block;
+      position: fixed;
+      inset-inline: 0;
+      bottom: 4.5rem;
+      z-index: 30;
+    }
+    [data-resumen][data-modo="2"] .resumen-card { display: none; }
+    [data-paso="2"] .acciones { border-top: 0; }
+    [data-resumen][data-modo="2"] .resumen-barra {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: .75rem 1rem 0;
+      background: #FFFFFF;
+      border-top: 1px solid #E2E8F0;
+    }
+
+    /* Paso 4: card de resumen arriba del formulario de pago */
+    [data-resumen][data-modo="4"] { display: block; order: -1; }
+    [data-resumen][data-modo="4"] .resumen-card {
+      background: #EEF2FF;
+      box-shadow: none;
+      border: 0;
+    }
+    [data-resumen][data-modo="4"] .resumen-titulo,
+    [data-resumen][data-modo="4"] .resumen-nota { display: none; }
+  }
+}
+
+/* Fuera de capa: tiene que ganarle a la utilidad "flex" de la nota */
+@media (max-width: 1023.98px) {
+  [data-resumen][data-modo="4"] :is(.resumen-titulo, .resumen-nota) { display: none; }
+}
