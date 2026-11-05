@@ -5,7 +5,7 @@ Front-end de un checkout de contratación: el usuario elige un producto, cotiza,
 
 **Stack:** HTML5 · Tailwind CSS v4 (CDN) · Basecoat UI 1.1.0 · JavaScript vanilla (módulos ES, sin frameworks).
 
-**Sitio publicado:** _(completar con la URL de GitHub Pages / Netlify)_
+**Sitio publicado:** https://segurosuxui.vercel.app/
 
 ## Cómo correrlo
 
@@ -88,18 +88,3 @@ y abrir `http://localhost:5500`. También funciona con Live Server de VS Code.
 - **Persistencia:** la solicitud se guarda en `localStorage` y sobrevive a un F5; se limpia con "Volver al inicio". Por seguridad, el número de tarjeta y el CVV **no** se guardan nunca.
 - **Máscaras de input:** valor del equipo con separador de miles, tarjeta en grupos de 4 y vencimiento con barra automática (`MM/AA`).
 - **Contador de pólizas persistente:** el número de póliza sigue la secuencia entre contrataciones.
-
-## Capturas
-
-_(agregar capturas mobile 390 px y desktop 1440 px de las 7 pantallas en `docs/capturas/`)_
-
-## Checklist
-
-- [x] Las 7 pantallas existen en 390 px y 1440 px
-- [x] Los 3 casos de prueba dan exactamente el valor esperado
-- [x] No se puede avanzar con datos inválidos y cada error tiene su mensaje
-- [x] "Volver" conserva los datos en todos los pasos
-- [x] 4000 0000 0000 0002 lleva al error y "Reintentar" vuelve al pago con todo cargado
-- [x] La póliza tiene formato `POL-AAAA-NNNNNN`
-- [x] Sin errores en la consola
-- [ ] Sitio publicado y README con capturas y URL
